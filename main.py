@@ -85,7 +85,7 @@ async def getPlayerList():
   return JSONResponse(content=player_list)
 
 @app.websocket_route("/select-player/{player_name}")
-class MyWSEndpoint(WebSocketEndpoint):
+class PlayerWSEndpoint(WebSocketEndpoint):
   async def on_connect(self, websocket: WebSocket):
     await websocket.accept()
     # initialise player
@@ -148,3 +148,128 @@ class MyWSEndpoint(WebSocketEndpoint):
   async def on_disconnect(self, websocket: WebSocket, close_code: int):
     pass
 
+global test_player
+
+@app.get("/test/initialise/{player_name}")
+async def test_initialise(player_name: str):
+  try:
+    mod = importlib.import_module("players.{}.player".format(player_name))
+    global test_player
+    test_player = getattr(mod, 'Player')()    
+  except:
+    return JSONResponse({
+      "error": True,
+      "purpose": "error",
+      "data": "{} is not available".format(player_name)
+    })
+  else:
+    return JSONResponse({
+      "error": False,
+      "purpose": "initialised",
+      "data": get_player_details(player_name)
+    })
+
+@app.get("/test/reset_player")
+async def test_reset():
+  try:
+    global test_player
+    retval = test_player.reset()
+  except:
+    return JSONResponse({
+      "error": True,
+      "purpose": "error",
+      "data": "reset command failed"
+    })
+  else:
+    return JSONResponse({
+      "error": False,
+      "purpose": "notification",
+      "data": {
+        "msg": "player is reset",
+        "return_value": retval
+      }
+    })
+
+@app.get("/test/set_map")
+async def test_set_map():
+  try:
+    global test_player
+    retval = test_player.set_map({'n_row': 6, 'n_col': 7}, {'position': [0, 3], 'actions': 's', 'entrance': True, 'exit': False})
+  except:
+    return JSONResponse({
+      "error": True,
+      "purpose": "error",
+      "data": "set_map command failed"
+    })
+  else:
+    return JSONResponse({
+      "error": False,
+      "purpose": "notification",
+      "data": {
+        "msg": "map is set",
+        "return_value": retval
+      }
+    })
+
+@app.get("/test/next_node")
+async def test_nextnode():
+  try:
+    global test_player
+    retval = test_player.next_node()
+  except:
+    return JSONResponse({
+      "error": True,
+      "purpose": "error",
+      "data": "next_node command failed"
+    })
+  else:
+    return JSONResponse({
+      "error": False,
+      "purpose": "notification",
+      "data": {
+        "msg": "next node value is returned",
+        "return_value": retval
+      }
+    })
+
+@app.get("/test/node_state")
+async def test_node_state():
+  try:
+    global test_player
+    retval = test_player.set_node_state({'position': [0, 0], 'actions': 'en', 'entrance': False, 'exit': False})
+  except:
+    return JSONResponse({
+      "error": True,
+      "purpose": "error",
+      "data": "set_node_state command failed"
+    })
+  else:
+    return JSONResponse({
+      "error": False,
+      "purpose": "notification",
+      "data": {
+        "msg": "the state of node is set",
+        "return_value": retval
+      }
+    })
+
+@app.get("/test/search_tree")
+async def test_search_tree():
+  try:
+    global test_player
+    retval = test_player.get_search_tree()
+  except:
+    return JSONResponse({
+      "error": True,
+      "purpose": "error",
+      "data": "get_search_tree command failed"
+    })
+  else:
+    return JSONResponse({
+      "error": False,
+      "purpose": "notification",
+      "data": {
+        "msg": "search tree is returned",
+        "return_value": retval
+      }
+    })
