@@ -116,12 +116,12 @@ class PlayerWSEndpoint(WebSocketEndpoint):
         "purpose": "notification",
         "data": "{} is reset".format(self.player_name)
       })
-    elif data["purpose"] == "set_map":
-      self.player.set_map(data["data"]["map"], data["data"]["entrance"])
+    elif data["purpose"] == "set_maze":
+      self.player.set_maze(data["data"]["maze"], data["data"]["entrance"])
       await websocket.send_json({
         "error": False,
         "purpose": "notification",
-        "data": "player received the map size and entrance state"
+        "data": "player received the maze size and entrance state"
       })
     elif data["purpose"] == "next_node": 
       next_node = self.player.next_node()
@@ -190,23 +190,23 @@ async def test_reset():
       }
     })
 
-@app.get("/test/set_map")
-async def test_set_map():
+@app.get("/test/set_maze")
+async def test_set_maze():
   try:
     global test_player
-    retval = test_player.set_map({'n_row': 6, 'n_col': 7}, {'position': [0, 3], 'actions': 's', 'entrance': True, 'exit': False})
+    retval = test_player.set_maze({'n_row': 6, 'n_col': 7}, {'position': [0, 3], 'actions': 's', 'entrance': True, 'exit': False})
   except:
     return JSONResponse({
       "error": True,
       "purpose": "error",
-      "data": "set_map command failed"
+      "data": "set_maze command failed"
     })
   else:
     return JSONResponse({
       "error": False,
       "purpose": "notification",
       "data": {
-        "msg": "map is set",
+        "msg": "maze is set",
         "return_value": retval
       }
     })

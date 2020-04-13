@@ -255,9 +255,9 @@ let vm = new Vue({
         this.player_socket.onopen = (event) => {
           console.log(event);
           event.target.send(JSON.stringify({
-            purpose: "set_map",
+            purpose: "set_maze",
             data: {
-              map: { n_row: this.maze.n_row, n_col: this.maze.n_col },
+              maze: { n_row: this.maze.n_row, n_col: this.maze.n_col },
               entrance: this.get_states(this.maze.entrance)
             }
           }));

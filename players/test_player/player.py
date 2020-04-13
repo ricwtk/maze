@@ -21,11 +21,11 @@ class Player:
 
     pass
 
-  def set_map(self, map, entrance):
+  def set_maze(self, maze, entrance):
     # sample code
-    self.map = {
-      "n_row": map["n_row"],
-      "n_col": map["n_col"]
+    self.maze = {
+      "n_row": maze["n_row"],
+      "n_col": maze["n_col"]
     }
     self.entrance = {
       "position": entrance["position"],
@@ -43,7 +43,7 @@ class Player:
 
   def next_node(self):
     # sample code
-    next_node_to_expand = [random.randrange(self.map["n_col"]),random.randrange(self.map["n_row"])]
+    next_node_to_expand = [random.randrange(self.maze["n_col"]),random.randrange(self.maze["n_row"])]
     # your code
     #
     #
@@ -67,9 +67,9 @@ class Player:
         next_step = [sol[-1][0], sol[-1][1]]
         options = [[], []]
         if next_step[0] > 0: options[0].append(-1)
-        if next_step[0] < self.map["n_col"] - 1: options[0].append(1)
+        if next_step[0] < self.maze["n_col"] - 1: options[0].append(1)
         if next_step[1] > 0: options[1].append(-1)
-        if next_step[1] < self.map["n_row"] - 1: options[1].append(1)
+        if next_step[1] < self.maze["n_row"] - 1: options[1].append(1)
         h_or_v = random.choice([0,1])
         next_step[h_or_v] += random.choice(options[h_or_v])
         sol.append(next_step)
