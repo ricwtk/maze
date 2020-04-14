@@ -96,54 +96,54 @@ class Player:
       'id': 1,
       'state': [1,1],
       'children': [2,3,4],
-      'actions': ['n', 's', 'e'],
+      'actions': ['n','s','e'],
       'removed': False,
       'parent': None
     }, {
       'id': 2,
       'state': [1,2],
       'children': [5,6,7],
-      'actions': ['n', 's', 'w'],
+      'actions': ['n','s','w'],
       'removed': False,
       'parent': None
     }, {
       'id': 3,
       'state': [1,0],
       'children': [8,9],
-      'actions': ['s', 'w'],
+      'actions': ['n','w'],
       'removed': False,
       'parent': None
     }, {
       'id': 4,
-      'state': [0,0],
+      'state': [2,1],
       'children': [],
       'actions': [],
       'removed': True,
       'parent': None
     }, {
       'id': 5,
-      'state': [0,0],
+      'state': [1,3],
       'children': [10,11],
-      'actions': ['n', 's', 'w'],
+      'actions': ['n','s','w'],
       'removed': False,
       'parent': None
     }, {
       'id': 6,
-      'state': [0,0],
-      'children': [12,13],
-      'actions': ['w', 'e'],
-      'removed': False,
+      'state': [1,1],
+      'children': [],
+      'actions': [],
+      'removed': True,
       'parent': None
     }, {
       'id': 7,
-      'state': [0,0],
-      'children': [],
-      'actions': [],
+      'state': [0,2],
+      'children': [12,13],
+      'actions': ['n','s'],
       'removed': False,
       'parent': None
     }, {
       'id': 8,
-      'state': [0,0],
+      'state': [1,1],
       'children': [],
       'actions': [],
       'removed': False,
@@ -157,28 +157,28 @@ class Player:
       'parent': None
     }, {
       'id': 10,
-      'state': [0,0],
+      'state': [1,4],
       'children': [],
       'actions': [],
       'removed': False,
       'parent': None
     }, {
       'id': 11,
-      'state': [0,0],
+      'state': [1,2],
       'children': [],
       'actions': [],
-      'removed': False,
+      'removed': True,
       'parent': None
     }, {
       'id': 12,
-      'state': [0,0],
+      'state': [0,3],
       'children': [],
       'actions': [],
       'removed': False,
       'parent': None
     }, {
       'id': 13,
-      'state': [0,0],
+      'state': [0,1],
       'children': [],
       'actions': [],
       'removed': False,

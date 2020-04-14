@@ -1,0 +1,1066 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Assignment 1</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/league.css">
+		<link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		<style>
+			svg text { font-family: inherit; }
+			kbd { background-color: #777; padding: 0 .5ex; border-radius: .5ex;}
+			.reveal p > code,
+			.reveal h2 > code,
+			.reveal li > code
+			{ background-color: #777; padding: .5ex; border-radius: .5ex; font-size: 70%; position: relative; top: -.15em}
+			.reveal pre { font-size: 80%; padding: 1ex; }
+			.button { background-color: grey; border-radius: .5ex; padding: .5ex 1ex; -moz-user-select: none; -webkit-user-select: none; font-size: 80%; }
+			.clickable { cursor: pointer; }
+			#search-tree-button { position: absolute; right: .5ex; bottom: .5ex; z-index: 100; }
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides" style="font-size:smaller">
+				<section data-markdown>
+					<textarea data-template>
+						# Assignment 1 <!-- .element: style="text-transform:capitalize" -->
+
+						### CSC3206 Artificial Intelligence<br>March 2020 <!-- .element: style="text-transform:capitalize" -->
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Navigation legends
+
+						<svg width="300" height="300" viewBox="-30 -30 60 60" xmlns="http://www.w3.org/2000/svg" class="navigate-down" href="#">
+							<path d="M -15 -10 l -10 10 l 10 10" stroke="#64B5F6" stroke-opacity="1" fill="none" stroke-width="2" stroke-linecap="round" />
+							<path d="M 15 -10 l 10 10 l -10 10" stroke="#64B5F6" stroke-opacity="1" fill="none" stroke-width="2" stroke-linecap="round" />
+							<text dominant-baseline="text-after-edge" text-anchor="middle" x="0" y="0" font-size="6" fill="white" font-family="Times">between</text>
+							<text dominant-baseline="text-before-edge" text-anchor="middle" x="0" y="0" font-size="6" fill="white">section</text>
+						</svg>
+						<svg width="300" height="300" viewBox="-30 -30 60 60" xmlns="http://www.w3.org/2000/svg" class="navigate-down" href="#">
+							<path d="M -10 15 l 10 10 l 10 -10" stroke="#64B5F6" stroke-opacity="1" fill="none" stroke-width="2" stroke-linecap="round" />
+							<path d="M -10 -15 l 10 -10 l 10 10" stroke="#64B5F6" stroke-opacity="1" fill="none" stroke-width="2" stroke-linecap="round" />
+							<!-- <text dominant-baseline="middle" text-anchor="middle" x="0" y="0" font-size="6" fill="white">within section</text> -->
+							<text dominant-baseline="middle" text-anchor="middle" x="0" y="0" font-size="6" fill="white">toggle overview</text>
+						</svg>
+
+						<kbd>esc</kbd> to toggle overview
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Group 
+
+						Group of maximum 5 members
+
+						Submit your group name, icon (from [here](https://cdn.materialdesignicons.com/5.0.45/)), and members on [Teams](https://teams.microsoft.com/l/channel/19%3A9467a429212a41d9ba4ed81d03eb9b18%40thread.tacv2/tab%3A%3A017981b2-b4c0-4849-ba96-43370992353b?groupId=bc9c28d0-51c3-420d-8c46-0ad3801185c7&tenantId=537c2be1-fcd4-45a9-83b3-6653eacc5070).
+					</textarea>
+				</section>
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+							## Problem
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							A player is placed at the entrance of a maze, and trying to find the path to one of the exits of the maze. 
+
+							<svg viewBox="0 0 900 800" width="300px" height="300px" style="background-color: #aaa; border-radius: .5ex">
+								<rect x="99.5" y="99.5" width="701" height="601" fill="white" fill-opacity="1" stroke="black"></rect>
+								<rect x="100" y="300" width="100" height="100" fill="red"></rect>
+								<rect x="500" y="100" width="100" height="100" fill="green"></rect>
+								<rect x="700" y="100" width="100" height="100" fill="green"></rect>
+								<rect x="199" y="599" width="102" height="2"></rect>
+								<rect x="499" y="599" width="102" height="2"></rect>
+								<rect x="399" y="499" width="102" height="2"></rect>
+								<rect x="599" y="499" width="102" height="2"></rect>
+								<rect x="299" y="399" width="102" height="2"></rect>
+								<rect x="99" y="299" width="102" height="2"></rect>
+								<rect x="299" y="299" width="102" height="2"></rect>
+								<rect x="599" y="299" width="102" height="2"></rect>
+								<rect x="699" y="299" width="102" height="2"></rect>
+								<rect x="299" y="199" width="102" height="2"></rect>
+								<rect x="399" y="199" width="102" height="2"></rect>
+								<rect x="599" y="199" width="102" height="2"></rect>
+								<rect x="399" y="599" width="2" height="102"></rect>
+								<rect x="199" y="499" width="2" height="102"></rect>
+								<rect x="399" y="499" width="2" height="102"></rect>
+								<rect x="699" y="499" width="2" height="102"></rect>
+								<rect x="499" y="399" width="2" height="102"></rect>
+								<rect x="699" y="399" width="2" height="102"></rect>
+								<rect x="199" y="299" width="2" height="102"></rect>
+								<rect x="299" y="299" width="2" height="102"></rect>
+								<rect x="399" y="299" width="2" height="102"></rect>
+								<rect x="499" y="299" width="2" height="102"></rect>
+								<rect x="599" y="299" width="2" height="102"></rect>
+								<rect x="499" y="99" width="2" height="102"></rect>
+								<rect x="599" y="99" width="2" height="102"></rect>
+								<rect x="699" y="99" width="2" height="102"></rect>
+								<image x="101" y="301" href="https://cdn.jsdelivr.net/npm/@mdi/svg@5.x/svg/account.svg" height="98" width="98"></image>
+								<!---->
+								<text x="150" y="750" dominant-baseline="middle" text-anchor="middle">0</text>
+								<text x="250" y="750" dominant-baseline="middle" text-anchor="middle">1</text>
+								<text x="350" y="750" dominant-baseline="middle" text-anchor="middle">2</text>
+								<text x="450" y="750" dominant-baseline="middle" text-anchor="middle">3</text>
+								<text x="550" y="750" dominant-baseline="middle" text-anchor="middle">4</text>
+								<text x="650" y="750" dominant-baseline="middle" text-anchor="middle">5</text>
+								<text x="750" y="750" dominant-baseline="middle" text-anchor="middle">6</text>
+								<text x="50" y="650" dominant-baseline="middle" text-anchor="middle">0</text>
+								<text x="50" y="550" dominant-baseline="middle" text-anchor="middle">1</text>
+								<text x="50" y="450" dominant-baseline="middle" text-anchor="middle">2</text>
+								<text x="50" y="350" dominant-baseline="middle" text-anchor="middle">3</text>
+								<text x="50" y="250" dominant-baseline="middle" text-anchor="middle">4</text>
+								<text x="50" y="150" dominant-baseline="middle" text-anchor="middle">5</text>
+						</svg>
+
+							The player can use any of the uninformed and informed search algorithms to perform the search. 
+						</textarea>
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+							## Instructions
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							You are required to create an AI player as a Python class. This AI player will be placed into a maze application.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							After initialisation, the AI player will have the information of the maze including <!-- .element: style="text-align: left" -->
+							
+							- size of the maze
+							- coordinate of the entrance
+							- possible actions from the entrance
+						</textarea>
+					</section>
+					<section data-markdown id="request-next-node">
+						<textarea data-template>
+							The maze application will request the next node to be expanded from the AI player. 
+							
+							This next node is a coordinate of a cell on the maze.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							The maze will then inform the AI player information of that cell including <!-- .element: style="text-align: left" -->
+
+							- possible actions from the cell
+							- whether it is an entrance
+							- whether it is an exit
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							The AI player will then inform the maze if he/she has found the solution.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							If the AI player has found the solution, <br>the maze will display the solution.
+
+							If not, the process will repeat from 
+							<br>[requesting next node](#request-next-node)
+						</textarea>
+					</section>
+					<section>
+						<svg viewBox="0 -20 100 1000" width="500" height="500">
+							<text x="0" y="0" dominant-baseline="middle" text-anchor="middle" fill="white">
+								<tspan>initialisation</tspan>
+								<tspan x="0" dy="160">update maze info</tspan>
+								<tspan x="0" dy="160">[maze] request next node</tspan>
+								<tspan x="0" dy="160">[AI] send next node</tspan>
+								<tspan x="0" dy="160">[maze] inform about node</tspan>
+								<tspan x="0" dy="160">[AI] solution?</tspan>
+								<tspan x="0" dy="160">[maze] display</tspan>
+							</text>
+							<path d="M 0 40 v 80 l 10 -10 l -10 3 l -10 -3 l 10 10" stroke="white" fill="white" />
+							<path d="M 0 200 v 80 l 10 -10 l -10 3 l -10 -3 l 10 10" stroke="white" fill="white" />
+							<path d="M 0 360 v 80 l 10 -10 l -10 3 l -10 -3 l 10 10" stroke="white" fill="white" />
+							<path d="M 0 520 v 80 l 10 -10 l -10 3 l -10 -3 l 10 10" stroke="white" fill="white" />
+							<path d="M 0 680 v 80 l 10 -10 l -10 3 l -10 -3 l 10 10" stroke="white" fill="white" />
+							<path d="M 0 840 v 80 l 10 -10 l -10 3 l -10 -3 l 10 10" stroke="white" fill="white" />
+							<path d="M 130 800 h 250 V 320 h -140" stroke="white" fill="none" />
+							<path d="M 240 320 l 10 10 l -3 -10 l 3 -10 l -10 10" stroke="white" fill="white" />
+							<text x="220" y="800" dominant-baseline="text-after-edge" text-anchor="start" fill="white">no</text>
+							<text x="20" y="880" dominant-baseline="middle" text-anchor="start" fill="white">yes</text>
+						</svg>
+					</section>
+					<style>
+						.fcn { font-family: 'Courier New', Courier, monospace; }
+					</style>
+					<section data-markdown>
+						<textarea data-template>
+							<svg width="800" height="500" viewBox="-750 -20 1500 800">
+								<text x="-50" y="0" text-anchor="end" dominant-baseline="middle" fill="white">
+									<tspan>Maze</tspan>
+									<tspan x="-50" dy="40">load player</tspan>
+									<tspan x="-50" dy="80">send maze info</tspan>
+									<tspan x="-50" dy="160">request next node</tspan>
+									<tspan x="-50" dy="80">provide node state and actions</tspan>
+									<tspan x="-50" dy="160">reset player</tspan>
+									<tspan x="-50" dy="160">request for search tree</tspan>
+								</text>
+								<text x="50" y="0" text-anchor="start" dominant-baseline="middle" fill="white">
+									<tspan x="50">AI Player</tspan>
+									<tspan x="50" dy="80">initialisation, <tspan class="fcn">__init__()</tspan></tspan>
+									<tspan x="50" dy="80">save maze info, <tspan class="fcn">set_maze()</tspan></tspan>
+									<tspan x="50" dy="160">send next node, <tspan class="fcn">next_node()</tspan></tspan>
+									<tspan x="50" dy="80">update node info, <tspan class="fcn">set_node_state()</tspan></tspan>
+									<tspan x="50" dy="160">reset player, <tspan class="fcn">reset()</tspan></tspan>
+									<tspan x="50" dy="160">send search tree, <tspan class="fcn">get_search_tree()</tspan></tspan>
+								</text>
+								<path d="M -40 40 h 80 l -10 -5 l 3 5 l -3 5 l 10 -5" transform="rotate(21.8,-45,40)" stroke="white" fill="white" />
+								<path d="M -40 120 h 80 l -10 -5 l 3 5 l -3 5 l 10 -5" transform="rotate(21.8,-40,120)" stroke="white" fill="white" />
+								<path d="M -40 280 h 80 l -10 -5 l 3 5 l -3 5 l 10 -5" transform="rotate(21.8,-40,280)" stroke="white" fill="white" />
+								<path d="M -40 360 h 80 l -10 -5 l 3 5 l -3 5 l 10 -5" transform="rotate(21.8,-40,360)" stroke="white" fill="white" />
+								<path d="M -40 520 h 80 l -10 -5 l 3 5 l -3 5 l 10 -5" transform="rotate(21.8,-40,520)" stroke="white" fill="white" />
+								<path d="M -40 680 h 80 l -10 -5 l 3 5 l -3 5 l 10 -5" transform="rotate(21.8,-40,680)" stroke="white" fill="white" />
+								<path d="M 40 80 h -80 l 10 -5 l -3 5 l 3 5 l -10 -5" transform="rotate(-21.8,40,80)" stroke="white" fill="white" />
+								<path d="M 40 320 h -80 l 10 -5 l -3 5 l 3 5 l -10 -5" transform="rotate(-21.8,40,320)" stroke="white" fill="white" />
+							</svg>
+						</textarea>
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+							## `Player` class
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							```Python
+							class Player:
+								def __init__(self):
+									pass
+
+								def reset(self):
+									pass
+
+								def set_maze(self, maze, entrance):
+									pass
+
+								def next_node(self):
+									return next_node_to_expand
+
+								def set_node_state(self, state):
+									return solution
+
+								def get_search_tree(self):
+									return search_tree
+							```
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							def __init__(self):
+								pass
+							```
+
+							This is the function that's called during initialisation. 
+							
+							This function neither takes any input nor provides outputs.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							def reset(self):
+								pass
+							```
+
+							This is the function that reset the player to only contain the size of the maze, and the information of the entrance, as if we have only called `__init__()` and `set_maze(...)`.
+
+							This function neither takes any input nor provides outputs.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							def set_maze(self, maze, entrance):
+								pass
+							```
+
+							This is the function to receive the information of maze from the maze application.
+
+							This function takes two positional inputs, `maze` and `entrance`.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							maze = {
+								"n_row": 5,
+								"n_col": 7
+							}
+							```
+
+							`maze["n_row"]` gives the number of rows of the maze.
+
+							`maze["n_col"]` gives the number of columns of the maze.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							entrance = {
+								"position": [2,1],
+								"actions": "nswe",
+								"entrance": True,
+								"exit": False
+							}
+							```
+
+							`entrance["position"]` gives the coordinates of the cell.
+
+							`entrance["actions"]` gives the available actions from the cell (north, south, west, east).
+
+							`entrance["entrance"]` is `True` if it's an entrance else `False`.
+
+							`entrance["exit"]` is `True` if it's an exit else `False`.
+
+							This is in the same format as the other node state provided by the maze.
+
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							def next_node(self):
+								return next_node_to_expand
+							```
+
+							This function returns the next node to be expanded. The output will be sent to maze application to request for information.
+							
+							`next_node_to_expand = [1,3]`
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							def set_node_state(self, state):
+								return solution
+							```
+
+							The maze application sends the state of a node using this function.
+							
+							This function takes one input, `state`, and gives one output, `solution`.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							state = {
+								"position": [3,4],
+								"actions": "nw",
+								"entrance": False,
+								"exit": False
+							}
+							```
+
+							`state["position"]` gives the coordinates of the cell.
+
+							`state["actions"]` gives the available actions from the cell (north, south, west, east).
+
+							`state["entrance"]` is `True` if it's an entrance else `False`.
+
+							`state["exit"]` is `True` if it's an exit else `False`.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							solution = {
+								"found": False,
+								"solution": []
+							}
+
+							solution = {
+								"found": True,
+								"solution": [[1,2], [1,3], [2,3], [3,3]]
+							}
+							```
+
+							`solution["found"]` is `True` if solution is found else `False`.
+
+							`solution["solution"]` gives the solution (sequence of cells)  if `solution["found"]` is `True` else `[]`.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							def get_search_tree(self):
+								return search_tree
+							```
+
+							This function returns the search tree up to the current stage. This function does not take any input.
+
+							The output of the function is a list/array of the nodes in the search tree.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							search_tree = [{
+								'id': 1,
+								'state': [1,1],
+								'children': [2,3,4],
+								'actions': ['n','s','e'],
+								'removed': False,
+								'parent': None
+							}, ...]
+							```
+
+							Each node has a unique `id`.
+
+							`state` is the coordinates of a cell.
+
+							`children` is a list of the `id`s of its children. If there is no children, it should be `[]`.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							<!-- .slide: style="text-align:justify" -->
+							```Python
+							search_tree = [{
+								'id': 1,
+								'state': [1,1],
+								'children': [2,3,4],
+								'actions': ['n','s','e'],
+								'removed': False,
+								'parent': None
+							}, ...]
+							```
+
+							`actions` is a list of actions that lead to its children, the sequence is corresponding to the sequence of `children`.
+
+							`removed` is `True` if the node is removed and will not be expanded.
+
+							`parent` is the id of its parent. The root node/initial state has no parent, and therefore it is `None`.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							### Example
+							
+							<div style="position:relative">
+								
+							```Python
+							search_tree = [{
+								'id': 1,
+								'state': [1,1],
+								'children': [2,3,4],
+								'actions': ['n','s','e'],
+								'removed': False,
+								'parent': None
+							}, {
+								'id': 2,
+								'state': [1,2],
+								'children': [5,6,7],
+								'actions': ['n','s','w'],
+								'removed': False,
+								'parent': None
+							}, {
+								'id': 3,
+								'state': [1,0],
+								'children': [8,9],
+								'actions': ['n','w'],
+								'removed': False,
+								'parent': None
+							}, {
+								'id': 4,
+								'state': [2,1],
+								'children': [],
+								'actions': [],
+								'removed': True,
+								'parent': None
+							}, {
+								'id': 5,
+								'state': [1,3],
+								'children': [10,11],
+								'actions': ['n','s','w'],
+								'removed': False,
+								'parent': None
+							}, {
+								'id': 6,
+								'state': [1,1],
+								'children': [],
+								'actions': [],
+								'removed': True,
+								'parent': None
+							}, {
+								'id': 7,
+								'state': [0,2],
+								'children': [12,13],
+								'actions': ['n','s'],
+								'removed': False,
+								'parent': None
+							}, {
+								'id': 8,
+								'state': [1,1],
+								'children': [],
+								'actions': [],
+								'removed': False,
+								'parent': None
+							}, {
+								'id': 9,
+								'state': [0,0],
+								'children': [],
+								'actions': [],
+								'removed': False,
+								'parent': None
+							}, {
+								'id': 10,
+								'state': [1,4],
+								'children': [],
+								'actions': [],
+								'removed': False,
+								'parent': None
+							}, {
+								'id': 11,
+								'state': [1,2],
+								'children': [],
+								'actions': [],
+								'removed': True,
+								'parent': None
+							}, {
+								'id': 12,
+								'state': [0,3],
+								'children': [],
+								'actions': [],
+								'removed': False,
+								'parent': None
+							}, {
+								'id': 13,
+								'state': [0,1],
+								'children': [],
+								'actions': [],
+								'removed': False,
+								'parent': None
+							}]
+							```
+
+							<div id="search-tree-button" class="clickable button">open search tree</div>
+							
+							<svg id="search-tree-example" viewBox="0 -10 760 370" style="width:100%; height:100%; font-size:12px; background-color:rgba(255,255,255,0.9); border-radius:.5em; position:absolute; left:0; top:0; display:none;">
+								<rect x="455" y="0" width="50" height="50" stroke="gray" fill="none"></rect>
+								<text x="480" y="25" font-weight="thin" dominant-baseline="middle" text-anchor="middle">1 • 1</text>
+								<!---->
+								<!---->
+								<rect x="205" y="100" width="50" height="50" stroke="gray" fill="none"></rect>
+								<text x="230" y="125" font-weight="thin" dominant-baseline="middle" text-anchor="middle">1 • 2</text>
+								<line x1="480" y1="50" x2="230" y2="100" stroke="gray"></line>
+								<text x="355" y="75" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">n</text>
+								<rect x="555" y="100" width="50" height="50" stroke="gray" fill="none"></rect>
+								<text x="580" y="125" font-weight="thin" dominant-baseline="middle" text-anchor="middle">1 • 0</text>
+								<line x1="480" y1="50" x2="580" y2="100" stroke="gray"></line>
+								<text x="530" y="75" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">s</text>
+								<rect x="705" y="100" width="50" height="50" stroke="red" fill="none"></rect>
+								<text x="730" y="125" font-weight="thin" dominant-baseline="middle" text-anchor="middle">2 • 1</text>
+								<line x1="480" y1="50" x2="730" y2="100" stroke="gray"></line>
+								<text x="605" y="75" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">e</text>
+								<rect x="55" y="200" width="50" height="50" stroke="gray" fill="none"></rect>
+								<text x="80" y="225" font-weight="thin" dominant-baseline="middle" text-anchor="middle">1 • 3</text>
+								<line x1="230" y1="150" x2="80" y2="200" stroke="gray"></line>
+								<text x="155" y="175" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">n</text>
+								<rect x="205" y="200" width="50" height="50" stroke="red" fill="none"></rect>
+								<text x="230" y="225" font-weight="thin" dominant-baseline="middle" text-anchor="middle">1 • 1</text>
+								<line x1="230" y1="150" x2="230" y2="200" stroke="gray"></line>
+								<text x="230" y="175" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">s</text>
+								<rect x="355" y="200" width="50" height="50" stroke="gray" fill="none"></rect>
+								<text x="380" y="225" font-weight="thin" dominant-baseline="middle" text-anchor="middle">0 • 2</text>
+								<line x1="230" y1="150" x2="380" y2="200" stroke="gray"></line>
+								<text x="305" y="175" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">w</text>
+								<rect x="505" y="200" width="50" height="50" stroke="gray" fill="none"></rect>
+								<text x="530" y="225" font-weight="thin" dominant-baseline="middle" text-anchor="middle">1 • 1</text>
+								<line x1="580" y1="150" x2="530" y2="200" stroke="gray"></line>
+								<text x="555" y="175" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">n</text>
+								<rect x="605" y="200" width="50" height="50" stroke="gray" fill="none"></rect>
+								<text x="630" y="225" font-weight="thin" dominant-baseline="middle" text-anchor="middle">0 • 0</text>
+								<line x1="580" y1="150" x2="630" y2="200" stroke="gray"></line>
+								<text x="605" y="175" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">w</text>
+								<!---->
+								<!---->
+								<!---->
+								<!---->
+								<rect x="5" y="300" width="50" height="50" stroke="gray" fill="none"></rect>
+								<text x="30" y="325" font-weight="thin" dominant-baseline="middle" text-anchor="middle">1 • 4</text>
+								<line x1="80" y1="250" x2="30" y2="300" stroke="gray"></line>
+								<text x="55" y="275" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">n</text>
+								<rect x="105" y="300" width="50" height="50" stroke="red" fill="none"></rect>
+								<text x="130" y="325" font-weight="thin" dominant-baseline="middle" text-anchor="middle">1 • 2</text>
+								<line x1="80" y1="250" x2="130" y2="300" stroke="gray"></line>
+								<text x="105" y="275" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">s</text>
+								<!---->
+								<!---->
+								<!---->
+								<!---->
+								<rect x="305" y="300" width="50" height="50" stroke="gray" fill="none"></rect>
+								<text x="330" y="325" font-weight="thin" dominant-baseline="middle" text-anchor="middle">0 • 3</text>
+								<line x1="380" y1="250" x2="330" y2="300" stroke="gray"></line>
+								<text x="355" y="275" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">n</text>
+								<rect x="405" y="300" width="50" height="50" stroke="gray" fill="none"></rect>
+								<text x="430" y="325" font-weight="thin" dominant-baseline="middle" text-anchor="middle">0 • 1</text>
+								<line x1="380" y1="250" x2="430" y2="300" stroke="gray"></line>
+								<text x="405" y="275" stroke="white" stroke-width=".5pt" font-weight="900" dominant-baseline="middle" text-anchor="middle">s</text>
+								<!---->
+								<!---->
+								<!---->
+								<!---->
+								<!---->
+								<!---->
+								<!---->
+								<!---->
+								<!---->
+								<!---->
+								<!---->
+								<!---->
+							</svg>
+
+							</div>
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							A sample player is provided as `players/test_player`.
+						</textarea>
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+							## Test environment setup
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							### Create Anaconda environment (optional)
+
+							You may or may not want to create a separate environment in Anaconda. You can also uses the `base` environment. 
+							<!-- .element: style="text-align:justify" -->
+							
+							Follow the instructions to create a new Anaconda environment. 
+							<!-- .element: style="text-align:justify" -->
+
+							1. Launch Anaconda navigator.
+							2. Go to `Environments` (on the left) > `Create` (on the bottom).
+							3. Give your environment a name.
+							4. Select Python 3.x.
+							5. Click `Create`.
+
+							Video on next page.
+						</textarea>
+					</section>
+					<section>
+						<video autoplay controls>
+							<source data-src="tutorials/A1.1.create.environment.mp4" type="video/mp4" />
+						</video>
+					</section>
+					<section data-markdown id="launch-terminal-within-environment">
+						<textarea data-template>
+							### Launch terminal within the environment
+
+							1. Launch Anaconda navigator.
+							2. Go to `Environments` (on the left).
+							3. Click on the environment you will be using.
+							4. Click on <span class="mdi mdi-play"></span> next to the environment after it is loaded.
+							5. Choose `Open Terminal`.
+
+							Video on next page.
+						</textarea>
+					</section>
+					<section>
+						<video autoplay controls>
+							<source data-src="tutorials/A1.2.Launch.Terminal.mp4" type="video/mp4" />
+						</video>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							### Launch terminal within the environment (alternative)
+
+							1. Launch a terminal.
+							2. Run `conda activate your-environment-name`. Replace `your-environment-name` with the name of the environment you created.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							### Installation of packages
+
+							You need to install two packages: `fastapi` and `uvicorn`.
+
+							In the terminal with your environment activated, <br>issue the following command
+
+							`conda install -c conda-forge fastapi uvicorn`
+
+							Video on next page.
+						</textarea>
+					</section>
+					<section>
+						<video autoplay controls>
+							<source data-src="tutorials/A1.3.Install.Packages.mp4" type="video/mp4" />
+						</video>
+					</section>
+					<section data-markdown id="clone-or-download">
+						<textarea data-template>
+							### Clone or download
+
+							[https://github.com/ricwtk/maze](https://github.com/ricwtk/maze)
+
+							If you are familiar with `git`, clone the repository &uarr;
+							<br>
+							else, download the repository and unzip the file.
+
+							There is no specific location you need to put this folder at.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							You should have the following folder struture.
+
+							<svg height="500px" viewBox="0 -20 500 580">
+								<svg class="mdi-folder" x="0" y="0" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="70" y="5" stroke="white" fill="white">maze</text>
+								<svg class="mdi-folder" x="50" y="80" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="85" stroke="white" fill="white">docs</text>
+								<svg class="mdi-folder" x="50" y="160" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="165" stroke="white" fill="white">mazes</text>
+								<svg class="mdi-folder" x="50" y="240" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="245" stroke="white" fill="white">players</text>
+								<svg class="mdi-folder" x="50" y="320" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="325" stroke="white" fill="white">static</text>
+								<svg class="mdi-language-python" x="50" y="400" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M19.14,7.5A2.86,2.86 0 0,1 22,10.36V14.14A2.86,2.86 0 0,1 19.14,17H12C12,17.39 12.32,17.96 12.71,17.96H17V19.64A2.86,2.86 0 0,1 14.14,22.5H9.86A2.86,2.86 0 0,1 7,19.64V15.89C7,14.31 8.28,13.04 9.86,13.04H15.11C16.69,13.04 17.96,11.76 17.96,10.18V7.5H19.14M14.86,19.29C14.46,19.29 14.14,19.59 14.14,20.18C14.14,20.77 14.46,20.89 14.86,20.89A0.71,0.71 0 0,0 15.57,20.18C15.57,19.59 15.25,19.29 14.86,19.29M4.86,17.5C3.28,17.5 2,16.22 2,14.64V10.86C2,9.28 3.28,8 4.86,8H12C12,7.61 11.68,7.04 11.29,7.04H7V5.36C7,3.78 8.28,2.5 9.86,2.5H14.14C15.72,2.5 17,3.78 17,5.36V9.11C17,10.69 15.72,11.96 14.14,11.96H8.89C7.31,11.96 6.04,13.24 6.04,14.82V17.5H4.86M9.14,5.71C9.54,5.71 9.86,5.41 9.86,4.82C9.86,4.23 9.54,4.11 9.14,4.11C8.75,4.11 8.43,4.23 8.43,4.82C8.43,5.41 8.75,5.71 9.14,5.71Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="405" stroke="white" fill="white">main.py</text>
+								<svg class="mdi-language-markdown" x="50" y="480" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M20.56 18H3.44C2.65 18 2 17.37 2 16.59V7.41C2 6.63 2.65 6 3.44 6H20.56C21.35 6 22 6.63 22 7.41V16.59C22 17.37 21.35 18 20.56 18M6.81 15.19V11.53L8.73 13.88L10.65 11.53V15.19H12.58V8.81H10.65L8.73 11.16L6.81 8.81H4.89V15.19H6.81M19.69 12H17.77V8.81H15.85V12H13.92L16.81 15.28L19.69 12Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="485" stroke="white" fill="white">README.md</text>
+								<path d="M 25 55 v 52 h 20 m -20 0 v 80 h 20 m -20 0 v 80 h 20 m -20 0 v 80 h 20 m -20 0 v 80 h 20 m -20 0 v 80 h 20 m -20 0" stroke="white" fill="none" stroke-width="5"/>
+							</svg>
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							### Run the application
+
+							1. [Launch a terminal within the environment](#launch-terminal-within-environment) you will be using.
+							2. Change directory `cd` to the [folder that you have expanded or cloned the repository to](#clone-or-download).
+							3. Execute the command `uvicorn main:app --reload`.
+							4. Head to your browser and go to `http://127.0.0.1:8000`. If your terminal output shows a different port, use that port instead.
+
+							<img data-src="maze_landing_page.png" height="300px">
+						</textarea>
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+							## Loading your code
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							### Create folder
+
+							1. In the [folder that you have expanded or cloned](#clone-or-download), create a folder within the `players` folder. There is no specific naming convention that need to follow.
+							2. Within the player folder, create two files, `group.txt` and `player.py`. 
+
+								`group.txt` contains the information of your group. <br> `player.py` contains the `Player` class, i.e. your code.
+
+								If you need other files for your code to run, you should place them in this folder.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							### Folder structure
+
+							If your player folder is named `super_player`, <br>this should be the folder structure. 
+
+							<svg height="500px" viewBox="0 -20 500 810">
+								<svg class="mdi-folder" x="0" y="0" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="70" y="5" stroke="white" fill="white">maze</text>
+								<svg class="mdi-folder" x="50" y="80" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="85" stroke="white" fill="white">docs</text>
+								<svg class="mdi-folder" x="50" y="160" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="165" stroke="white" fill="white">mazes</text>
+								<svg class="mdi-folder" x="50" y="240" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="245" stroke="white" fill="white">players</text>
+								<svg class="mdi-folder" x="100" y="320" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="#4DB6AC" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="170" y="325" stroke="#4DB6AC" fill="#4DB6AC">super_player</text>
+								<svg class="mdi-file" x="150" y="400" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="#4DB6AC" d="M13,9V3.5L18.5,9M6,2C4.89,2 4,2.89 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="220" y="405" stroke="#4DB6AC" fill="#4DB6AC">group.txt</text>
+								<svg class="mdi-language-python" x="150" y="480" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="#4DB6AC" d="M19.14,7.5A2.86,2.86 0 0,1 22,10.36V14.14A2.86,2.86 0 0,1 19.14,17H12C12,17.39 12.32,17.96 12.71,17.96H17V19.64A2.86,2.86 0 0,1 14.14,22.5H9.86A2.86,2.86 0 0,1 7,19.64V15.89C7,14.31 8.28,13.04 9.86,13.04H15.11C16.69,13.04 17.96,11.76 17.96,10.18V7.5H19.14M14.86,19.29C14.46,19.29 14.14,19.59 14.14,20.18C14.14,20.77 14.46,20.89 14.86,20.89A0.71,0.71 0 0,0 15.57,20.18C15.57,19.59 15.25,19.29 14.86,19.29M4.86,17.5C3.28,17.5 2,16.22 2,14.64V10.86C2,9.28 3.28,8 4.86,8H12C12,7.61 11.68,7.04 11.29,7.04H7V5.36C7,3.78 8.28,2.5 9.86,2.5H14.14C15.72,2.5 17,3.78 17,5.36V9.11C17,10.69 15.72,11.96 14.14,11.96H8.89C7.31,11.96 6.04,13.24 6.04,14.82V17.5H4.86M9.14,5.71C9.54,5.71 9.86,5.41 9.86,4.82C9.86,4.23 9.54,4.11 9.14,4.11C8.75,4.11 8.43,4.23 8.43,4.82C8.43,5.41 8.75,5.71 9.14,5.71Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="220" y="485" stroke="#4DB6AC" fill="#4DB6AC">player.py</text>
+								<svg class="mdi-folder" x="50" y="560" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="565" stroke="white" fill="white">static</text>
+								<svg class="mdi-language-python" x="50" y="640" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M19.14,7.5A2.86,2.86 0 0,1 22,10.36V14.14A2.86,2.86 0 0,1 19.14,17H12C12,17.39 12.32,17.96 12.71,17.96H17V19.64A2.86,2.86 0 0,1 14.14,22.5H9.86A2.86,2.86 0 0,1 7,19.64V15.89C7,14.31 8.28,13.04 9.86,13.04H15.11C16.69,13.04 17.96,11.76 17.96,10.18V7.5H19.14M14.86,19.29C14.46,19.29 14.14,19.59 14.14,20.18C14.14,20.77 14.46,20.89 14.86,20.89A0.71,0.71 0 0,0 15.57,20.18C15.57,19.59 15.25,19.29 14.86,19.29M4.86,17.5C3.28,17.5 2,16.22 2,14.64V10.86C2,9.28 3.28,8 4.86,8H12C12,7.61 11.68,7.04 11.29,7.04H7V5.36C7,3.78 8.28,2.5 9.86,2.5H14.14C15.72,2.5 17,3.78 17,5.36V9.11C17,10.69 15.72,11.96 14.14,11.96H8.89C7.31,11.96 6.04,13.24 6.04,14.82V17.5H4.86M9.14,5.71C9.54,5.71 9.86,5.41 9.86,4.82C9.86,4.23 9.54,4.11 9.14,4.11C8.75,4.11 8.43,4.23 8.43,4.82C8.43,5.41 8.75,5.71 9.14,5.71Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="645" stroke="white" fill="white">main.py</text>
+								<svg class="mdi-language-markdown" x="50" y="720" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M20.56 18H3.44C2.65 18 2 17.37 2 16.59V7.41C2 6.63 2.65 6 3.44 6H20.56C21.35 6 22 6.63 22 7.41V16.59C22 17.37 21.35 18 20.56 18M6.81 15.19V11.53L8.73 13.88L10.65 11.53V15.19H12.58V8.81H10.65L8.73 11.16L6.81 8.81H4.89V15.19H6.81M19.69 12H17.77V8.81H15.85V12H13.92L16.81 15.28L19.69 12Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="725" stroke="white" fill="white">README.md</text>
+								<path d="M 25 55 v 52 h 20 m -20 0 v 80 h 20 m -20 0 v 80 h 20 m -20 0 v 320 h 20 m -20 0 v 80 h 20 m -20 0 v 80 h 20 m -20 0" stroke="white" fill="none" stroke-width="5"/>
+								<path d="M 25 55 m 50 240 v 52 h 20" stroke="white" fill="none" stroke-width="5"/>
+								<path d="M 25 55 m 100 320 v 52 h 20 m -20 0 v 80 h 20 m -20 0" stroke="white" fill="none" stroke-width="5"/>
+							</svg>
+						</textarea>
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+							## Testing
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							Before solving a maze with the AI player, <br>it's good idea to check if your code works.
+
+							Go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+
+							(Your port might be different, <br>check with the terminal output when you started the application)
+							<!-- .element: style="font-size:smaller" -->
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							Run each of the `/test/...` and <br>make sure the responses are JSON objects with `"error": false`.
+
+							Video on next page.
+						</textarea>
+					</section>
+					<section>
+						<video autoplay controls>
+							<source data-src="tutorials/A1.4.Testing.mp4" type="video/mp4" />
+						</video>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							If any of the test returns a response with `"error": true`, check the corresponding method in the `Player` class.
+
+							| test | method |
+							|------|--------|
+							|`/test/initialise/{player_name}` | `__init__` |
+							|`/test/reset_player` | `reset` |
+							|`/test/set_maze` | `set_maze` |
+							|`/test/next_node` | `next_node` |
+							|`/test/node_state` | `set_node_state` |
+							|`/test/search_tree` | `get_search_tree` |
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							For errors, go to the terminal in which you executed `uvicorn main:app --reload` and check the logs. 
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							If there is no error, or all errors are cleared, you can go ahead to the next step - solving the maze with your AI player.
+						</textarea>
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+							## Solving maze
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							Go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							Click <span class="button"><span class="mdi mdi-account-switch-outline"></span> PLAYER NAME <span class="mdi mdi-account"></span></span> to load your AI player.
+							
+							Click <span class="button"><span class="mdi mdi-map-marker-distance"></span> DEFAULT <span class="mdi mdi-map-outline"></span></span> to load different mazes.
+						</textarea>
+					</section>
+					<section>
+						<h3>After your AI player is loaded</h3>
+
+						<div style="text-align:left">
+						<p><span class="button mdi mdi-restart"></span> resets the player</p>
+
+						<p><span class="button mdi mdi-play"></span>
+						/
+						<span class="button mdi mdi-pause"></span> automates the process of communication between maze and player until paused or solution is found</p>
+						
+						<p><span class="button mdi mdi-skip-next"></span> steps the communication between maze and player</p>
+						
+						<p><span class="button mdi mdi-graph-outline"></span> shows search tree as provided by <code>Player.get_search_tree</code></p>
+						</div>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							### When a solution is found
+							
+							the solution will be displayed on the maze
+						</textarea>
+					</section>
+					<section>
+						<video autoplay controls>
+							<source data-src="tutorials/A1.5.Run.Maze.mp4" type="video/mp4" />
+						</video>
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+							## Maze
+
+							You can create more mazes for your own testing through
+
+							`http://127.0.0.1:8000/maze-creator`
+						</textarea>
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+							## Submission
+						</textarea>
+					</section>
+					<section data-markdown id="submission-deadline">
+						<textarea data-template>
+							### Submission deadline
+	
+							Submission on MS Teams by **30 May 2020** 5 p.m. <br>(penalty applies for submission later than 6 p.m.)
+						</textarea>
+					</section>
+					<section data-markdown id="submission-file">
+						<textarea data-template>
+							### Submission file
+
+							A zip file and a report
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							### zip file
+
+							<svg width="50%" height="50%" viewBox="0 -70 700 400">
+								<text dominant-baseline="text-after-edge" x="0" y="-30" stroke="white" fill="white">zipped folder</text>
+								<svg class="mdi-folder-zip-outline" 
+									x="0" y="0" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M20 6H12L10 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V8C22 6.9 21.1 6 20 6M20 18H16V16H14V18H4V8H14V10H16V8H20V18M16 12V10H18V12H16M14 12H16V14H14V12M18 16H16V14H18V16Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="70" y="5" stroke="white" fill="white">[Alphanumeric version of your group name]</text>
+								<svg class="mdi-file-outline" 
+									x="50" y="80" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="85" stroke="white" fill="white">group.txt</text>
+								<svg class="mdi-file-outline" 
+									x="50" y="160" width="55" height="55" viewBox="0 0 24 24">
+									<path fill="white" d="M19.14,7.5A2.86,2.86 0 0,1 22,10.36V14.14A2.86,2.86 0 0,1 19.14,17H12C12,17.39 12.32,17.96 12.71,17.96H17V19.64A2.86,2.86 0 0,1 14.14,22.5H9.86A2.86,2.86 0 0,1 7,19.64V15.89C7,14.31 8.28,13.04 9.86,13.04H15.11C16.69,13.04 17.96,11.76 17.96,10.18V7.5H19.14M14.86,19.29C14.46,19.29 14.14,19.59 14.14,20.18C14.14,20.77 14.46,20.89 14.86,20.89A0.71,0.71 0 0,0 15.57,20.18C15.57,19.59 15.25,19.29 14.86,19.29M4.86,17.5C3.28,17.5 2,16.22 2,14.64V10.86C2,9.28 3.28,8 4.86,8H12C12,7.61 11.68,7.04 11.29,7.04H7V5.36C7,3.78 8.28,2.5 9.86,2.5H14.14C15.72,2.5 17,3.78 17,5.36V9.11C17,10.69 15.72,11.96 14.14,11.96H8.89C7.31,11.96 6.04,13.24 6.04,14.82V17.5H4.86M9.14,5.71C9.54,5.71 9.86,5.41 9.86,4.82C9.86,4.23 9.54,4.11 9.14,4.11C8.75,4.11 8.43,4.23 8.43,4.82C8.43,5.41 8.75,5.71 9.14,5.71Z"/>
+								</svg>
+								<text dominant-baseline="text-before-edge" x="120" y="165" stroke="white" fill="white">player.py</text>
+								<path d="M 25 55 v 2 v 50 h 20 m -20 0 v 80 h 20" stroke="white" fill="none" stroke-width="5"/>
+							</svg>
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							### Report (.pdf)
+
+							The report should include the problem description, the explanation of search algorithm implementation, and a minimum of one case study using the `sample` maze. 
+						</textarea>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				hash: true,
+				minScale: 1,
+				maxScale: 1,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/highlight/highlight.js' },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+			Reveal.addEventListener( 'ready', function( event ) {
+				document.getElementById("search-tree-button").addEventListener("click", (ev) => {
+					let steg = document.getElementById("search-tree-example");
+					steg.style.display = steg.style.display == "block" ? "none" : "block";
+					ev.target.innerHTML = steg.style.display == "block" ? "close search tree" : "open search tree";;
+				});
+			});
+		</script>
+	</body>
+</html>
