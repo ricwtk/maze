@@ -24,7 +24,7 @@
 		</script>
 		<style>
 			svg text { font-family: inherit; }
-			kbd { background-color: #777; padding: 0 .5ex; border-radius: .5ex;}
+			kbd { background-color: #777; padding: 0 .5ex; border-radius: .5ex}
 			.reveal p > code,
 			.reveal h2 > code,
 			.reveal li > code
@@ -62,6 +62,8 @@
 						</svg>
 
 						<kbd>esc</kbd> to toggle overview
+
+						<kbd>ctrl-click</kbd> or <kbd>alt-click</kbd> to zoom in or out
 					</textarea>
 				</section>
 				<section data-markdown>
@@ -1043,13 +1045,12 @@
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
 				hash: true,
-				minScale: 1,
-				maxScale: 1,
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/highlight/highlight.js' },
-					{ src: 'plugin/notes/notes.js', async: true }
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
 				]
 			});
 
