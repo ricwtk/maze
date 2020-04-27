@@ -8,7 +8,7 @@
 
 3. Run each of the `/test/...` and <br>make sure the responses are JSON objects with `"error": false`.
 
-<video autoplay controls width="100%">
+<video controls width="100%">
   <source src="../tutorials/A1.4.Testing.mp4" type="video/mp4" />
 </video>
 

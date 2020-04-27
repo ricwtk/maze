@@ -12,7 +12,7 @@ Follow the instructions to create a new Anaconda environment.
 4. Select Python 3.x.
 5. Click `Create`.
 
-<video autoplay controls width="100%">
+<video controls width="100%">
   <source src="../tutorials/A1.1.create.environment.mp4" type="video/mp4" />
 </video>
 
@@ -24,7 +24,7 @@ Follow the instructions to create a new Anaconda environment.
 4. Click on <span class="mdi mdi-play"></span> next to the environment after it is loaded.
 5. Choose `Open Terminal`.
 
-<video autoplay controls width="100%">
+<video controls width="100%">
   <source width="100%" src="../tutorials/A1.2.Launch.Terminal.mp4" type="video/mp4" />
 </video>
 
@@ -41,7 +41,7 @@ Follow the instructions to create a new Anaconda environment.
 
     `conda install -c conda-forge fastapi uvicorn`
 
-<video autoplay controls width="100%">
+<video controls width="100%">
   <source width="100%" src="../tutorials/A1.3.Install.Packages.mp4" type="video/mp4" />
 </video>
 

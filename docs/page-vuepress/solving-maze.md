@@ -19,6 +19,6 @@
 
 The solution will be displayed on the maze.
 
-<video autoplay controls width="100%">
+<video controls width="100%">
   <source src="../tutorials/A1.5.Run.Maze.mp4" type="video/mp4" />
 </video>

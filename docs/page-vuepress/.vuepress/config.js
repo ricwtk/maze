@@ -21,30 +21,10 @@ module.exports = {
       'testing',
       'solving-maze',
       'maze-creator',
-      // {
-      //   title: '2020 March',
-      //   collapsable: false,
-      //   children: [
-      //     '/get-start',
-      //     '/lab1',
-      //     '/lab2',
-      //     '/lab3',
-      //     // '/lab4',
-      //     // '/lab5',
-      //     // '/lab6',
-      //     // '/lab7',
-      //     // '/lab8',
-      //     // '/lab9'
-      //   ]
-      // },
     ],
     lastUpdated: 'Last Updated'
   },
   markdown: {
     lineNumbers: true
   },
-  // plugins: [
-  //   'latex',
-  //   'tabs'
-  // ],
 }
