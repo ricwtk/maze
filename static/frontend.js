@@ -41,7 +41,9 @@ let vm = new Vue({
         node_width: 50,
         link_height: 50,
         node_sep: 50 
-      }
+      },
+      tree_width: 100,
+      tree_height: 100
     },
     continuous: false,
     logs: [],

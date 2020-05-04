@@ -123,7 +123,7 @@
                 <v-card-title>Search tree</v-card-title>
                 <v-divider></v-divider>
                 <v-card-text>
-                  <svg style="width:100%;height:100%" :view-box.camel="search_tree_view_box" v-if="st_dialog.search_tree">
+                  <svg :style="{ width: st_dialog.tree_width + '%' , height: st_dialog.tree_height + '%' }" :view-box.camel="search_tree_view_box" v-if="st_dialog.search_tree">
                     <template v-for="layer,l in search_tree_array.slice(0,search_tree_array.length-1)">
                       <template v-for="node,n in layer.flat(2)">
                         <rect :key="'node-'+l+'-'+n" 
@@ -162,6 +162,13 @@
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
+                  <v-btn @click.stop="st_dialog.tree_width+=5" title="increase width"><v-icon>mdi-arrow-expand-horizontal</v-icon></v-btn>
+                  <v-btn @click.stop="st_dialog.tree_width-=5" title="decrease width"><v-icon>mdi-arrow-collapse-horizontal</v-icon></v-btn>
+                  <v-btn @click.stop="st_dialog.tree_height+=5" title="increase height"><v-icon>mdi-arrow-expand-vertical</v-icon></v-btn>
+                  <v-btn @click.stop="st_dialog.tree_height-=5" title="decrease height"><v-icon>mdi-arrow-collapse-vertical</v-icon></v-btn>
+                  <v-btn @click.stop="st_dialog.tree_width+=5;st_dialog.tree_height+=5" title="increase width and height"><v-icon>mdi-arrow-expand-all</v-icon></v-btn>
+                  <v-btn @click.stop="st_dialog.tree_width-=5;st_dialog.tree_height-=5" title="decrease width and height"><v-icon>mdi-arrow-collapse-all</v-icon></v-btn>
+                  <v-btn @click.stop="st_dialog.tree_width=100;st_dialog.tree_height=100" title="fit tree"><v-icon>mdi-arrow-all</v-icon></v-btn>
                   <v-spacer></v-spacer>
                   <v-btn @click.stop="st_dialog.show=false">Close</v-btn>
                 </v-card-actions>
