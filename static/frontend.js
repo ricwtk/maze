@@ -46,6 +46,7 @@ let vm = new Vue({
       tree_height: 100
     },
     continuous: false,
+    log_enabler: true,
     logs: [],
     solution: {
       found: false,
@@ -225,7 +226,7 @@ let vm = new Vue({
       }
     },
     maze_loaded: function () {
-      this.logs.push({
+      this.add_to_log({
         type: 'notification',
         text: `Maze ${this.dialog.name_to_load} is loaded`
       });
@@ -274,12 +275,12 @@ let vm = new Vue({
           let data = JSON.parse(event.data);
           console.log(data);
           if (data.error) {
-            this.logs.push({
+            this.add_to_log({
               type: 'error',
               text: data.data
             });
           } else if (data.purpose == "initialised") {
-            this.logs.push({
+            this.add_to_log({
               type: 'notification',
               text: `${data.data.name} is initialised`
             });
@@ -292,12 +293,12 @@ let vm = new Vue({
             this.solution.solution = []; 
             this.player_loaded();
           } else if (data.purpose == "notification") {
-            this.logs.push({
+            this.add_to_log({
               type: 'notification',
               text: data.data
             });
           } else if (data.purpose == "next_node") {
-            this.logs.push({
+            this.add_to_log({
               type: 'notification',
               text: `sending state of [${data.data}] to player`
             });
@@ -311,11 +312,11 @@ let vm = new Vue({
               this.continuous = false;
               this.solution.found = true;
               this.solution.solution = data.data.solution;
-              this.logs.push({
+              this.add_to_log({
                 type: 'notification',
                 text: 'solution is found'
               });
-              this.logs.push({
+              this.add_to_log({
                 type: 'notification',
                 text: `solution is ${ data.data.solution.map(n => `[${n[0]},${n[1]}]`).join(' → ') }`
               });
@@ -327,7 +328,7 @@ let vm = new Vue({
           } else if (data.purpose == "search_tree") {
             this.st_dialog.loading = false;
             this.st_dialog.search_tree = data.data;
-            this.logs.push({
+            this.add_to_log({
               type: 'notification',
               text: 'search tree is updated'
             });
@@ -369,5 +370,10 @@ let vm = new Vue({
         data: ""
       }));
     },
+    add_to_log: function (l) {
+      if (this.log_enabler) {
+        this.logs.push(l);
+      }
+    }
   }
 });
