@@ -105,84 +105,84 @@ class Player:
       'children': [5,6,7],
       'actions': ['n','s','w'],
       'removed': False,
-      'parent': None
+      'parent': 1
     }, {
       'id': 3,
       'state': [1,0],
       'children': [8,9],
       'actions': ['n','w'],
       'removed': False,
-      'parent': None
+      'parent': 1
     }, {
       'id': 4,
       'state': [2,1],
       'children': [],
       'actions': [],
       'removed': True,
-      'parent': None
+      'parent': 1
     }, {
       'id': 5,
       'state': [1,3],
       'children': [10,11],
       'actions': ['n','s','w'],
       'removed': False,
-      'parent': None
+      'parent': 2
     }, {
       'id': 6,
       'state': [1,1],
       'children': [],
       'actions': [],
       'removed': True,
-      'parent': None
+      'parent': 2
     }, {
       'id': 7,
       'state': [0,2],
       'children': [12,13],
       'actions': ['n','s'],
       'removed': False,
-      'parent': None
+      'parent': 2
     }, {
       'id': 8,
       'state': [1,1],
       'children': [],
       'actions': [],
       'removed': False,
-      'parent': None
+      'parent': 3
     }, {
       'id': 9,
       'state': [0,0],
       'children': [],
       'actions': [],
       'removed': False,
-      'parent': None
+      'parent': 3
     }, {
       'id': 10,
       'state': [1,4],
       'children': [],
       'actions': [],
       'removed': False,
-      'parent': None
+      'parent': 5
     }, {
       'id': 11,
       'state': [1,2],
       'children': [],
       'actions': [],
       'removed': True,
-      'parent': None
+      'parent': 5
     }, {
       'id': 12,
       'state': [0,3],
       'children': [],
       'actions': [],
       'removed': False,
-      'parent': None
+      'parent': 7
     }, {
       'id': 13,
       'state': [0,1],
       'children': [],
       'actions': [],
       'removed': False,
-      'parent': None
+      'parent': 7
     }]
     # your code
     #
