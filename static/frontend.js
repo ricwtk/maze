@@ -32,6 +32,7 @@ let vm = new Vue({
       position: [-1,-1]
     },
     player_socket: null,
+    next_player_to_load: "",
     st_dialog: {
       show: false,
       loading: false,
@@ -253,88 +254,97 @@ let vm = new Vue({
         this.dialog.loading = true;
         if (this.player_socket) {
           this.player_socket.close();
+          this.next_player_to_load = this.dialog.name_to_load;
+        } else {
+          this.create_web_socket(this.dialog.name_to_load);
         }
-        this.player_socket = new WebSocket(`ws://${location.host}/select-player/${this.dialog.name_to_load}`);
-        this.player_socket.onopen = (event) => {
-          console.log(event);
-          event.target.send(JSON.stringify({
-            purpose: "set_maze",
-            data: {
-              maze: { n_row: this.maze.n_row, n_col: this.maze.n_col },
-              entrance: this.get_states(this.maze.entrance)
-            }
-          }));
-        };
-        
-        this.player_socket.onclose = (event) => {
-          console.log("Web socket closed");
-          this.player_socket = null;
-        };
-
-        this.player_socket.onmessage = (event) => {
-          let data = JSON.parse(event.data);
-          console.log(data);
-          if (data.error) {
-            this.add_to_log({
-              type: 'error',
-              text: data.data
-            });
-          } else if (data.purpose == "initialised") {
-            this.add_to_log({
-              type: 'notification',
-              text: `${data.data.name} is initialised`
-            });
-            this.player.name = data.data.name;
-            this.player.icon = data.data.icon;
-            this.player.group = data.data.group;
-            this.player.members = data.data.members;
-            this.player.position = [-1,-1];
-            this.solution.found = false;
-            this.solution.solution = []; 
-            this.player_loaded();
-          } else if (data.purpose == "notification") {
-            this.add_to_log({
-              type: 'notification',
-              text: data.data
-            });
-          } else if (data.purpose == "next_node") {
-            this.add_to_log({
-              type: 'notification',
-              text: `sending state of [${data.data}] to player`
-            });
-            this.player.position = data.data;
-            event.target.send(JSON.stringify({
-              purpose: "node_state",
-              data: this.get_states(data.data)
-            }));
-          } else if (data.purpose == "solution") {
-            if (data.data.found) {
-              this.continuous = false;
-              this.solution.found = true;
-              this.solution.solution = data.data.solution;
-              this.add_to_log({
-                type: 'notification',
-                text: 'solution is found'
-              });
-              this.add_to_log({
-                type: 'notification',
-                text: `solution is ${ data.data.solution.map(n => `[${n[0]},${n[1]}]`).join(' → ') }`
-              });
-            } else {
-              if (this.continuous) {
-                this.search_next();
-              }
-            }
-          } else if (data.purpose == "search_tree") {
-            this.st_dialog.loading = false;
-            this.st_dialog.search_tree = data.data;
-            this.add_to_log({
-              type: 'notification',
-              text: 'search tree is updated'
-            });
-          }
-        };
       }
+    },
+    create_web_socket: function (player_name) {
+      this.player_socket = new WebSocket(`ws://${location.host}/select-player/${player_name}`);
+      this.player_socket.onopen = (event) => {
+        console.log(event);
+        event.target.send(JSON.stringify({
+          purpose: "set_maze",
+          data: {
+            maze: { n_row: this.maze.n_row, n_col: this.maze.n_col },
+            entrance: this.get_states(this.maze.entrance)
+          }
+        }));
+      };
+      
+      this.player_socket.onclose = (event) => {
+        console.log("Web socket closed");
+        this.player_socket = null;
+        if (this.next_player_to_load) { 
+          this.create_web_socket(this.next_player_to_load); 
+          this.next_player_to_load = "";
+        }
+      };
+
+      this.player_socket.onmessage = (event) => {
+        let data = JSON.parse(event.data);
+        console.log(data);
+        if (data.error) {
+          this.add_to_log({
+            type: 'error',
+            text: data.data
+          });
+        } else if (data.purpose == "initialised") {
+          this.add_to_log({
+            type: 'notification',
+            text: `${data.data.name} is initialised`
+          });
+          this.player.name = data.data.name;
+          this.player.icon = data.data.icon;
+          this.player.group = data.data.group;
+          this.player.members = data.data.members;
+          this.player.position = [-1,-1];
+          this.solution.found = false;
+          this.solution.solution = []; 
+          this.player_loaded();
+        } else if (data.purpose == "notification") {
+          this.add_to_log({
+            type: 'notification',
+            text: data.data
+          });
+        } else if (data.purpose == "next_node") {
+          this.add_to_log({
+            type: 'notification',
+            text: `sending state of [${data.data}] to player`
+          });
+          this.player.position = data.data;
+          event.target.send(JSON.stringify({
+            purpose: "node_state",
+            data: this.get_states(data.data)
+          }));
+        } else if (data.purpose == "solution") {
+          if (data.data.found) {
+            this.continuous = false;
+            this.solution.found = true;
+            this.solution.solution = data.data.solution;
+            this.add_to_log({
+              type: 'notification',
+              text: 'solution is found'
+            });
+            this.add_to_log({
+              type: 'notification',
+              text: `solution is ${ data.data.solution.map(n => `[${n[0]},${n[1]}]`).join(' → ') }`
+            });
+          } else {
+            if (this.continuous) {
+              this.search_next();
+            }
+          }
+        } else if (data.purpose == "search_tree") {
+          this.st_dialog.loading = false;
+          this.st_dialog.search_tree = data.data;
+          this.add_to_log({
+            type: 'notification',
+            text: 'search tree is updated'
+          });
+        }
+      };
     },
     player_loaded: function () {
       this.dialog.loading = false;
