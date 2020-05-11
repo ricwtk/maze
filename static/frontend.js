@@ -236,7 +236,8 @@ let vm = new Vue({
       this.solution.found = false;
       this.solution.solution = [];
       if (this.player_socket) {
-        this.reset_player();
+        this.player_socket.close();
+        this.next_player_to_load = this.player.name;
       }
     },
     request_player_list: function () {
