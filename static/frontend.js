@@ -269,7 +269,8 @@ let vm = new Vue({
           purpose: "set_maze",
           data: {
             maze: { n_row: this.maze.n_row, n_col: this.maze.n_col },
-            entrance: this.get_states(this.maze.entrance)
+            entrance: this.get_states(this.maze.entrance),
+            exits: this.maze.exits
           }
         }));
       };

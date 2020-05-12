@@ -8,7 +8,7 @@ class Player:
   def reset(self):
     pass
 
-  def set_maze(self, maze, entrance):
+  def set_maze(self, maze, entrance, exits):
     pass
 
   def next_node(self):
@@ -46,13 +46,13 @@ This function neither takes any input nor provides outputs.
 ## `set_maze`
 
 ```Python
-def set_maze(self, maze, entrance):
+def set_maze(self, maze, entrance, exits):
   pass
 ```
 
 This is the function to receive the information of maze from the maze application.
 
-This function takes two positional inputs, `maze` and `entrance`.
+This function takes three positional inputs, `maze`, `entrance`, and `exits`.
 
 ```Python
 maze = {
@@ -83,6 +83,12 @@ entrance = {
 `entrance["exit"]` is `True` if it's an exit else `False`.
 
 This is in the same format as the other node state provided by the maze.
+
+```Python
+exits = [[3,3], [2,2]]
+```
+
+`exits` is a list of coordinates for the exits.
 
 ## `next_node`
 

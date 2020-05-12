@@ -21,7 +21,7 @@ class Player:
 
     pass
 
-  def set_maze(self, maze, entrance):
+  def set_maze(self, maze, entrance, exits):
     # sample code
     self.maze = {
       "n_row": maze["n_row"],
@@ -33,6 +33,7 @@ class Player:
       "entrance": entrance["entrance"],
       "exit": entrance["exit"]
     }
+    self.exits = exits
     # your code
     #
     #

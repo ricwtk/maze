@@ -7,6 +7,7 @@
     - size of the maze
     - coordinate of the entrance
     - possible actions from the entrance
+    - coordinates of the exits
 
 3. The maze application will request the next node to be expanded from the AI player. 
 							
