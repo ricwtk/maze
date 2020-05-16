@@ -270,7 +270,7 @@ let vm = new Vue({
           data: {
             maze: { n_row: this.maze.n_row, n_col: this.maze.n_col },
             entrance: this.get_states(this.maze.entrance),
-            exits: this.maze.exits
+            exits: this.maze.exits.filter(exit => exit[0] > -1 && exit[0] < this.maze.n_col && exit[1] > -1 && exit[1] < this.maze.n_row)
           }
         }));
       };
