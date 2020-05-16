@@ -92,8 +92,8 @@
                       </v-card-text>
                     </v-card>
                     <v-spacer class="my-4"></v-spacer>
-                    <v-alert type="error" v-if="maze.entrance.length == 0">Specify an entrance</v-alert>
-                    <v-alert type="error" v-if="maze.exits.length == 0">Specify at least one exit</v-alert>
+                    <v-alert type="error" v-if="!has_entrance">Specify an entrance</v-alert>
+                    <v-alert type="error" v-if="!has_exits">Specify at least one exit</v-alert>
                   </v-card-text>
                 </v-card>
               </v-col>

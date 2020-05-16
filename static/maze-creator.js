@@ -40,6 +40,16 @@ let vm = new Vue({
     maze_view_box: function () {
       return `0 0 ${(this.maze.n_col+2)*this.m_unit} ${(this.maze.n_row+2)*this.m_unit}`;
     },
+    has_entrance: function () {
+      return this.maze.entrance.length > 0 
+        && this.maze.entrance[0] > -1 
+        && this.maze.entrance[0] < this.maze.n_col 
+        && this.maze.entrance[1] > -1 
+        && this.maze.entrance[1] < this.maze.n_row;
+    },
+    has_exits: function () {
+      return this.maze.exits.filter(exit => exit[0] > -1 && exit[0] < this.maze.n_col && exit[1] > -1 && exit[1] < this.maze.n_row).length > 0;
+    }
   },
   watch: {
     save_or_load: function (val) {
@@ -183,6 +193,11 @@ let vm = new Vue({
       }
     },
     post_to_save_maze: function () {
+      this.maze.borders.bottom = this.maze.borders.bottom.filter(cell => cell[0] > -1 && cell[0] < this.maze.n_col && cell[1] > -1 && cell[1] < this.maze.n_row);
+      this.maze.borders.right = this.maze.borders.right.filter(cell => cell[0] > -1 && cell[0] < this.maze.n_col && cell[1] > -1 && cell[1] < this.maze.n_row);
+      this.maze.exits = this.maze.exits.filter(cell => cell[0] > -1 && cell[0] < this.maze.n_col && cell[1] > -1 && cell[1] < this.maze.n_row);
+      this.maze.entrance = this.maze.entrance[0] > -1 && this.maze.entrance[0] < this.maze.n_col && this.maze.entrance[1] > -1 && this.maze.entrance[1] < this.maze.n_row ?  this.maze.entrance : [];
+      
       const request = new Request(`./save-maze/?name=${this.dialog.name_to_save_or_load}`, 
         {
           method: "POST",
