@@ -60,7 +60,7 @@ let vm = new Vue({
     },
     search_tree_array: function () {
       let st_arr = [];
-      if (this.st_dialog.search_tree) {
+      if (this.st_dialog.search_tree && this.st_dialog.search_tree.length > 0) {
         st_arr.push([[this.st_dialog.search_tree.find(v => !v.parent)]]);
         while (!st_arr[st_arr.length - 1].every(arr => arr.every(v => v < 1))) {
           st_arr.push(
